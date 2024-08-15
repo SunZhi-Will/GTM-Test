@@ -11,7 +11,7 @@
     iframe.style.zIndex = '9999'; // 確保 iframe 在頁面頂層顯示
 
     // 將 iframe 插入到頁面中的指定容器中
-    document.getElementById('cookieConsentContainer').appendChild(iframe);
+    document.getElementsByTagName('body')[0].appendChild(iframe);
 
     // 定義 Cookie Consent 的 HTML 內容
     var htmlContent = `
