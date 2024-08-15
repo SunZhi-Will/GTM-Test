@@ -13,6 +13,27 @@
     // 將 iframe 插入到頁面中的指定容器中
     document.getElementsByTagName('body')[0].appendChild(iframe);
 
+    function setupTabNavigation() {
+        const tabs = document.querySelectorAll('.page-item');
+        const contents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function () {
+                // Remove active class from all tabs
+                tabs.forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                this.classList.add('active');
+
+                // Hide all content
+                contents.forEach(content => content.classList.add('d-none'));
+
+                // Show corresponding content
+                const contentId = this.id.replace('-tab', '-content');
+                document.getElementById(contentId).classList.remove('d-none');
+            });
+        });
+    }
+
     // 定義 Cookie Consent 的 HTML 內容
     var htmlContent = `
     <!-- Boostrape -->
@@ -42,12 +63,16 @@
             <!-- */bootstrap模板/* -->
             <nav aria-label="choosepage">
                 <ul class="pagination pagination-lg">
-                  <li class="page-item active" id="consent-tab" aria-current="page">
-                    <span class="page-link" data-lang-key="tabConsent">Consent</span>
-                  </li>
-                  <li class="page-item" id="detail-tab"><a class="page-link" data-lang-key="tabDetails">Details</a></li>
-                  <li class="page-item" id="about-tab"><a class="page-link" data-lang-key="tabAbout">About</a></li>
-                </ul>
+    <li class="page-item active" id="consent-tab" aria-current="page">
+        <span class="page-link" data-lang-key="tabConsent">Consent</span>
+    </li>
+    <li class="page-item" id="details-tab">
+        <a class="page-link" data-lang-key="tabDetails">Details</a>
+    </li>
+    <li class="page-item" id="about-tab">
+        <a class="page-link" data-lang-key="tabAbout">About</a>
+    </li>
+</ul>
               </nav>
 
 
@@ -181,5 +206,7 @@
 
     // 將 HTML 內容寫入 iframe
     iframe.innerHTML = htmlContent;
+
+    setupTabNavigation();
 
 }();
