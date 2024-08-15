@@ -16,6 +16,8 @@
     function setupTabNavigation() {
         const tabs = document.querySelectorAll('.page-item');
         const contents = document.querySelectorAll('.tab-content');
+        const consentTab = document.getElementById('consent-tab');
+        const consentContent = document.getElementById('consent-content');
 
         tabs.forEach(tab => {
             tab.addEventListener('click', function () {
@@ -24,14 +26,26 @@
                 // Add active class to clicked tab
                 this.classList.add('active');
 
-                // Hide all content
-                contents.forEach(content => content.classList.add('d-none'));
+                if (this.id === 'consent-tab') {
+                    // Show Consent, hide others
+                    consentContent.classList.remove('d-none');
+                    contents.forEach(content => content.classList.add('d-none'));
+                } else {
+                    // Hide Consent
+                    consentContent.classList.add('d-none');
 
-                // Show corresponding content
-                const contentId = this.id.replace('-tab', '-content');
-                document.getElementById(contentId).classList.remove('d-none');
+                    // Hide all other content
+                    contents.forEach(content => content.classList.add('d-none'));
+
+                    // Show corresponding content
+                    const contentId = this.id.replace('-tab', '-content');
+                    document.getElementById(contentId).classList.remove('d-none');
+                }
             });
         });
+
+        // Initially show Consent
+        consentTab.click();
     }
 
     // 定義 Cookie Consent 的 HTML 內容
