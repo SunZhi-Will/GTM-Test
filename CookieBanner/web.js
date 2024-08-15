@@ -555,7 +555,9 @@
 
 
     var script = document.createElement('script');
-    script.src = "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js";
+    script.src = "https://sunzhi-will.github.io/GTM-Test/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js";
+    script.integrity = "sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz";
+    script.crossOrigin = "anonymous";
     shadow.appendChild(script);
 
     var script = document.createElement('script');
@@ -565,6 +567,7 @@
     var script = document.createElement('script');
     script.src = "https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js";
     shadow.appendChild(script);
+
 
 
 
