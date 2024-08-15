@@ -66,7 +66,7 @@
         });
 
         // 初始化時隱藏 Consent 窗口
-        consentWindow.style.display = 'none';
+        // consentWindow.style.display = 'none';
     }
 
     // 定義 Cookie Consent 的 HTML 內容
