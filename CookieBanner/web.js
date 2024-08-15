@@ -26,11 +26,12 @@
 
         // 懸浮按鈕點擊事件
         floatingButton.addEventListener('click', function () {
-            if (consentWindow.style.display === 'none') {
-                consentWindow.style.display = 'block';
+            if (consentWindow.classList.contains('d-none')) {
+                consentWindow.classList.add('active');
+
                 showConsent();
             } else {
-                consentWindow.style.display = 'none';
+                consentWindow.classList.add('d-none');
             }
         });
 
@@ -89,7 +90,7 @@
     </button>    
     <!-- 懸浮Icon -->
 
-    <div id="Consent" class="tab-content consent-Window fade-in-image">
+    <div id="Consent" class="tab-content consent-Window fade-in-image d-none">
         <div id="cookie-consent-banner" class="cookie-consent-banner">
             <h3 data-lang-key="cookietitle">Cookie settings</h3>
 
