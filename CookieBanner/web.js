@@ -13,61 +13,21 @@
     // 將 iframe 插入到頁面中的指定容器中
     document.getElementsByTagName('body')[0].appendChild(iframe);
 
-    function setupConsentBanner() {
-        const floatingButton = document.getElementById('floatingButton');
-        const consentWindow = document.getElementById('Consent');
-        const consentTab = document.getElementById('consent-tab');
-        const tabs = document.querySelectorAll('.page-item');
-        const contents = document.querySelectorAll('.tab-content');
-        const consentContent = document.getElementById('consent-content');
+    // 獲取當前頁面的 URL
+    const url = new URL(window.location.href);
 
-        // 初始隱藏 Consent 窗口
-        consentWindow.style.display = 'none';
+    // 獲取查詢參數中的 type
+    const type = url.searchParams.get('type');
 
-        // 懸浮按鈕點擊事件
-        floatingButton.addEventListener('click', function () {
-            if (consentWindow.classList.contains('d-none')) {
-                consentWindow.classList.add('active');
-
-                showConsent();
-            } else {
-                consentWindow.classList.add('d-none');
-            }
-        });
-
-        function showConsent() {
-            // 顯示 Consent 內容
-            consentContent.classList.remove('d-none');
-            // 隱藏其他內容
-            contents.forEach(content => {
-                if (content.id !== 'consent-content') {
-                    content.classList.add('d-none');
-                }
-            });
-            // 設置 Consent 標籤為活動狀態
-            tabs.forEach(tab => tab.classList.remove('active'));
-            consentTab.classList.add('active');
-        }
-
-        tabs.forEach(tab => {
-            tab.addEventListener('click', function () {
-                tabs.forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-
-                if (this.id === 'consent-tab') {
-                    showConsent();
-                } else {
-                    consentContent.classList.add('d-none');
-                    contents.forEach(content => content.classList.add('d-none'));
-                    const contentId = this.id.replace('-tab', '-content');
-                    document.getElementById(contentId).classList.remove('d-none');
-                }
-            });
-        });
-
-        // 初始化時隱藏 Consent 窗口
-        // consentWindow.style.display = 'none';
+    // 檢查 type 是否存在
+    if (type) {
+        console.log('Type:', type);
+    } else {
+        console.log('No type parameter found');
     }
+
+
+
 
     // 定義 Cookie Consent 的 HTML 內容
     var htmlContent = `
@@ -99,13 +59,13 @@
             <nav aria-label="choosepage">
                 <ul class="pagination pagination-lg">
                 <li class="page-item active" id="consent-tab" aria-current="page">
-                    <span class="page-link" data-lang-key="tabConsent">Consent</span>
+                    <button class="page-link" data-lang-key="tabConsent">Consent</button>
                 </li>
                 <li class="page-item" id="details-tab">
-                    <a class="page-link" data-lang-key="tabDetails">Details</a>
+                    <button class="page-link" data-lang-key="tabDetails">Details</button>
                 </li>
                 <li class="page-item" id="about-tab">
-                    <a class="page-link" data-lang-key="tabAbout">About</a>
+                    <button class="page-link" data-lang-key="tabAbout">About</button>
                 </li>
             </ul>
               </nav>
@@ -238,10 +198,25 @@
         </div>
     </div>
     `;
+    const shadow = iframe.attachShadow({ mode: 'open' });
 
     // 將 HTML 內容寫入 iframe
-    iframe.innerHTML = htmlContent;
+    shadow.innerHTML = htmlContent;
+    var script = document.createElement('script');
+    script.src = "https://sunzhi-will.github.io/GTM-Test/CookieBanner/script.js";
+    shadow.appendChild(script);
 
-    setupConsentBanner();
+    var script = document.createElement('script');
+    script.src = "https://sunzhi-will.github.io/GTM-Test/CookieBanner/trigger.js";
+    shadow.appendChild(script);
+
+    var script = document.createElement('script');
+    script.src = "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js";
+    shadow.appendChild(script);
+
+    var script = document.createElement('script');
+    script.src = "https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js";
+    shadow.appendChild(script);
+
 
 }();
