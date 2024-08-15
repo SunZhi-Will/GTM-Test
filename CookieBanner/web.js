@@ -13,39 +13,59 @@
     // 將 iframe 插入到頁面中的指定容器中
     document.getElementsByTagName('body')[0].appendChild(iframe);
 
-    function setupTabNavigation() {
+    function setupConsentBanner() {
+        const floatingButton = document.getElementById('floatingButton');
+        const consentWindow = document.getElementById('Consent');
+        const consentTab = document.getElementById('consent-tab');
         const tabs = document.querySelectorAll('.page-item');
         const contents = document.querySelectorAll('.tab-content');
-        const consentTab = document.getElementById('consent-tab');
         const consentContent = document.getElementById('consent-content');
+
+        // 初始隱藏 Consent 窗口
+        consentWindow.style.display = 'none';
+
+        // 懸浮按鈕點擊事件
+        floatingButton.addEventListener('click', function () {
+            if (consentWindow.style.display === 'none') {
+                consentWindow.style.display = 'block';
+                showConsent();
+            } else {
+                consentWindow.style.display = 'none';
+            }
+        });
+
+        function showConsent() {
+            // 顯示 Consent 內容
+            consentContent.classList.remove('d-none');
+            // 隱藏其他內容
+            contents.forEach(content => {
+                if (content.id !== 'consent-content') {
+                    content.classList.add('d-none');
+                }
+            });
+            // 設置 Consent 標籤為活動狀態
+            tabs.forEach(tab => tab.classList.remove('active'));
+            consentTab.classList.add('active');
+        }
 
         tabs.forEach(tab => {
             tab.addEventListener('click', function () {
-                // Remove active class from all tabs
                 tabs.forEach(t => t.classList.remove('active'));
-                // Add active class to clicked tab
                 this.classList.add('active');
 
                 if (this.id === 'consent-tab') {
-                    // Show Consent, hide others
-                    consentContent.classList.remove('d-none');
-                    contents.forEach(content => content.classList.add('d-none'));
+                    showConsent();
                 } else {
-                    // Hide Consent
                     consentContent.classList.add('d-none');
-
-                    // Hide all other content
                     contents.forEach(content => content.classList.add('d-none'));
-
-                    // Show corresponding content
                     const contentId = this.id.replace('-tab', '-content');
                     document.getElementById(contentId).classList.remove('d-none');
                 }
             });
         });
 
-        // Initially show Consent
-        consentTab.click();
+        // 初始化時隱藏 Consent 窗口
+        consentWindow.style.display = 'none';
     }
 
     // 定義 Cookie Consent 的 HTML 內容
@@ -65,7 +85,7 @@
     <!-- 動畫 -->
         <!-- 懸浮Icon -->
     <button class="float my-float" id="floatingButton">
-      <img class="float my-float" id="floatingButton" src="https://sunzhi-will.github.io/GTM-Test/CookieBanner/gear.png" alt="floating-icon"/></img>
+      <img class="float my-float"  src="https://sunzhi-will.github.io/GTM-Test/CookieBanner/gear.png" alt="floating-icon"/></img>
     </button>    
     <!-- 懸浮Icon -->
 
@@ -77,16 +97,16 @@
             <!-- */bootstrap模板/* -->
             <nav aria-label="choosepage">
                 <ul class="pagination pagination-lg">
-    <li class="page-item active" id="consent-tab" aria-current="page">
-        <span class="page-link" data-lang-key="tabConsent">Consent</span>
-    </li>
-    <li class="page-item" id="details-tab">
-        <a class="page-link" data-lang-key="tabDetails">Details</a>
-    </li>
-    <li class="page-item" id="about-tab">
-        <a class="page-link" data-lang-key="tabAbout">About</a>
-    </li>
-</ul>
+                <li class="page-item active" id="consent-tab" aria-current="page">
+                    <span class="page-link" data-lang-key="tabConsent">Consent</span>
+                </li>
+                <li class="page-item" id="details-tab">
+                    <a class="page-link" data-lang-key="tabDetails">Details</a>
+                </li>
+                <li class="page-item" id="about-tab">
+                    <a class="page-link" data-lang-key="tabAbout">About</a>
+                </li>
+            </ul>
               </nav>
 
 
@@ -221,6 +241,6 @@
     // 將 HTML 內容寫入 iframe
     iframe.innerHTML = htmlContent;
 
-    setupTabNavigation();
+    setupConsentBanner();
 
 }();
