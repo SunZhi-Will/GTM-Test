@@ -329,29 +329,29 @@
             let event_obj = {};
             const consent_analytics = shadow.querySelectorAll('.consent-analytics')
             if (consent_analytics[0].checked == true) {
-                event_obj['analytics_storage'] = "granted"
+                event_obj['analytics_storage'] = true
             } else {
-                event_obj['analytics_storage'] = "denied"
+                event_obj['analytics_storage'] = false
             }
 
             const consent_preferences = shadow.querySelectorAll('.consent-preferences')
             if (consent_preferences[0].checked == true) {
-                event_obj['personalization_storage'] = "granted"
-                event_obj['functionality_storage'] = "granted"
+                event_obj['personalization_storage'] = true
+                event_obj['functionality_storage'] = true
             } else {
-                event_obj['personalization_storage'] = "denied"
-                event_obj['functionality_storage'] = "denied"
+                event_obj['personalization_storage'] = false
+                event_obj['functionality_storage'] = false
             }
 
             const consent_marketings = shadow.querySelectorAll('.consent-marketing')
             if (consent_marketings[0].checked == true) {
-                event_obj['ad_storage'] = "granted"
-                event_obj['ad_user_data'] = "granted"
-                event_obj['ad_personalization'] = "granted"
+                event_obj['ad_storage'] = true
+                event_obj['ad_user_data'] = true
+                event_obj['ad_personalization'] = true
             } else {
-                event_obj['ad_storage'] = "denied"
-                event_obj['ad_user_data'] = "denied"
-                event_obj['ad_personalization'] = "denied"
+                event_obj['ad_storage'] = false
+                event_obj['ad_user_data'] = false
+                event_obj['ad_personalization'] = false
             }
             setObjectCookie("CookieConsent", event_obj)
             const chatWindow = shadow.querySelector('.consent-Window');
