@@ -1,31 +1,41 @@
 !function () {
     console.log('Test')
-    // 創建一個新的 iframe 元素
-    var iframe = document.createElement('div');
-    iframe.style.width = '100%';
-    iframe.style.height = '150px';
-    iframe.style.border = 'none';
-    iframe.style.position = 'fixed';
-    iframe.style.bottom = '0';
-    iframe.style.left = '0';
-    iframe.style.zIndex = '9999'; // 確保 iframe 在頁面頂層顯示
 
-    // 將 iframe 插入到頁面中的指定容器中
-    document.getElementsByTagName('body')[0].appendChild(iframe);
+    // get id ---------------------------------------------------
 
-    // 獲取當前頁面的 URL
-    const url = new URL(window.location.href);
+    // 获取当前脚本的所有 <script> 元素
+    const scripts = document.getElementsByTagName('script');
 
-    // 獲取查詢參數中的 type
-    const type = url.searchParams.get('type');
+    // 找到当前运行的脚本
+    const currentScript = scripts[scripts.length - 1];
 
-    // 檢查 type 是否存在
-    if (type) {
-        console.log('Type:', type);
-    } else {
-        console.log('No type parameter found');
+    // 获取当前脚本的 src 属性
+    const scriptSrc = currentScript.src;
+
+    // 使用 URLSearchParams 提取 id 参数
+    const urlParams = new URLSearchParams(scriptSrc.split('?')[1]);
+    const id = urlParams.get('id');
+
+    console.log(id); // 输出 id
+
+
+    // cookie ---------------------------------------------------
+    function setObjectCookie(name, obj, days) {
+        const value = JSON.stringify(obj); // 将对象转换为 JSON 字符串
+        let expires = "";
+        if (days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
     }
 
+    // 使用例子
+    // const user = { username: "Sun", role: "developer" };
+    // setObjectCookie('userInfo', user, 7);
+
+    // function ---------------------------------------------------
 
     function setupConsentBanner(shadow) {
 
@@ -41,7 +51,6 @@
 
         // 懸浮按鈕點擊事件
         floatingButton.addEventListener('click', function () {
-            console.log("TEST2")
             if (consentWindow.classList.contains('d-none')) {
                 consentWindow.classList.add('active');
                 consentWindow.classList.remove('d-none');
@@ -87,11 +96,6 @@
     }
 
     function setWeb(shadow) {
-
-        console.log('1231231313')
-
-
-
         const translations = {
             EN: {
                 cookietitle: "Cookie settings",
@@ -321,9 +325,8 @@
             event.currentTarget.classList.add('active');
         }
 
-        let dataLayer = []
         function consent_push() {
-            const event_obj = { "event": "consent" }
+            let event_obj = {};
             const consent_analytics = shadow.querySelectorAll('.consent-analytics')
             if (consent_analytics[0].checked == true) {
                 event_obj['analytics_storage'] = "granted"
@@ -350,8 +353,7 @@
                 event_obj['ad_user_data'] = "denied"
                 event_obj['ad_personalization'] = "denied"
             }
-
-            dataLayer.push(event_obj)
+            setObjectCookie("CookieConsent", event_obj)
             const chatWindow = shadow.querySelector('.consent-Window');
             chatWindow.classList.add('d-none')
         }
@@ -366,6 +368,23 @@
         setLanguage('ZH');
 
     }
+
+    // function ---------------------------------------------------
+
+    // shadow ---------------------------------------------------
+
+    // 創建一個新的 iframe 元素
+    var shadowDiv = document.createElement('div');
+    shadowDiv.style.width = '100%';
+    shadowDiv.style.height = '150px';
+    shadowDiv.style.border = 'none';
+    shadowDiv.style.position = 'fixed';
+    shadowDiv.style.bottom = '0';
+    shadowDiv.style.left = '0';
+    shadowDiv.style.zIndex = '9999'; // 確保 iframe 在頁面頂層顯示
+
+    // 將 iframe 插入到頁面中的指定容器中
+    document.getElementsByTagName('body')[0].appendChild(shadowDiv);
 
     // 定義 Cookie Consent 的 HTML 內容
     var htmlContent = `
@@ -548,17 +567,7 @@
         </div>
     </div>
     `;
-    const shadow = iframe.attachShadow({ mode: 'open' });
-
-    const styleReset = document.createElement('style');
-    styleReset.textContent = `
-    /* 重置所有元素的默认样式 */
-    all: initial;
-    * {
-        box-sizing: border-box;
-    }
-`;
-    shadow.appendChild(styleReset);
+    const shadow = shadowDiv.attachShadow({ mode: 'open' });
 
     // 將 HTML 內容寫入 iframe
     shadow.innerHTML = htmlContent;
@@ -578,14 +587,10 @@
     script.src = "https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js";
     shadow.appendChild(script);
 
-
-
-
-    // shadow.getElementsByTagName('head')[0].innerHTML = '<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>'
-
-
-
     setupConsentBanner(shadow);
     setWeb(shadow);
+
+    // shadow ---------------------------------------------------
+
 
 }();

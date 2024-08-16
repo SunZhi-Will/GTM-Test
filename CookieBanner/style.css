@@ -1,9 +1,31 @@
 #Consent {
+
     font-size: 16px !important;
 }
 
 html {
+    all: unset;
+}
+
+button {
     font-size: 16px !important;
+}
+
+p {
+    font-size: 16px !important;
+}
+
+@media (min-width: 1200px) {
+
+    .h2,
+    h2 {
+        font-size: 32px !important;
+    }
+}
+
+.page-link {
+    padding: 12px 24px !important;
+    font-size: 20px !important;
 }
 
 .cookie-consent-banner {
