@@ -550,12 +550,22 @@
     `;
     const shadow = iframe.attachShadow({ mode: 'open' });
 
+    const styleReset = document.createElement('style');
+    styleReset.textContent = `
+    /* 重置所有元素的默认样式 */
+    all: initial;
+    * {
+        box-sizing: border-box;
+    }
+`;
+    shadow.appendChild(styleReset);
+
     // 將 HTML 內容寫入 iframe
     shadow.innerHTML = htmlContent;
 
 
     var script = document.createElement('script');
-    script.src = "https://sunzhi-will.github.io/GTM-Test/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js";
+    script.src = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js";
     script.integrity = "sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz";
     script.crossOrigin = "anonymous";
     shadow.appendChild(script);
@@ -576,6 +586,6 @@
 
 
     setupConsentBanner(shadow);
-    setWeb(shadow)
+    setWeb(shadow);
 
 }();
