@@ -7,25 +7,13 @@
     const scripts = document.getElementsByTagName('script');
 
     // 找到当前运行的脚本
-    const currentScript = scripts[scripts.length - 1];
+    const currentScript = document.currentScript;
 
     // 获取当前脚本的 src 属性
     const scriptSrc = currentScript.src;
 
     // 使用 URLSearchParams 提取 id 参数
     const urlParams = new URLSearchParams(scriptSrc.split('?')[1]);
-    const id = urlParams.get('id');
-    var assumedCookiebotScript = document.currentScript;
-    console.log(assumedCookiebotScript)
-    console.log(this.scriptId)
-    console.log(this.scriptElement)
-    this.getURLParam = function (paramName) {
-        var d = document.getElementById(this.scriptId) || this.scriptElement
-            , urlParam = "";
-        return d && (paramName = new RegExp("[?&]" + encodeURIComponent(paramName) + "=([^&#]*)").exec(d.src),
-            paramName && (urlParam = decodeURIComponent(paramName[1].replace(/\+/g, " ")))),
-            urlParam
-    }
 
     console.log(this.getURLParam("id")); // 输出 id
 
