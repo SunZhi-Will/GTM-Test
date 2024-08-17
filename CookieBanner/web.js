@@ -468,17 +468,6 @@
                           <li><a class="dropdown-item" data-lang-key="language_zh" onclick="setLanguage('ZH')" >Zh-Tw</a></li>
                           <li><a class="dropdown-item" data-lang-key="language_en" onclick="setLanguage('EN')" >English</a></li>
                         </ul>
-
-                        <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-    Dropdown button
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-    <li><a class="dropdown-item" href="#">Action</a></li>
-    <li><a class="dropdown-item" href="#">Another action</a></li>
-    <li><a class="dropdown-item" href="#">Something else here</a></li>
-  </ul>
-</div>
                     </div>
                 </div>
                 
@@ -566,12 +555,56 @@
               </div>
         </div>
     </div>
+    <script type="module">
+    import { Toast } from 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.esm.min.js'
+    
+    var collapseElementList = [].slice.call(document.querySelectorAll('.collapse'))
+var collapseList = collapseElementList.map(function (collapseEl) {
+  return new bootstrap.Collapse(collapseEl)
+})
+    </script>
     `;
     const shadow = shadowDiv.attachShadow({ mode: 'open' });
 
     // 將 HTML 內容寫入 iframe
     shadow.innerHTML = htmlContent;
 
+    const buttons = shadow.querySelectorAll('.accordion-button');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const target = shadow.querySelector(button.getAttribute('data-bs-target'));
+            if (target.classList.contains('show')) {
+                target.classList.remove('show');
+                button.classList.add('collapsed');
+            } else {
+                shadow.querySelectorAll('.accordion-collapse.show').forEach(openContent => {
+                    openContent.classList.remove('show');
+                });
+                shadow.querySelectorAll('.accordion-button').forEach(openContent => {
+                    openContent.classList.add('collapsed');
+                });
+
+                target.classList.add('show');
+                button.classList.remove('collapsed');
+            }
+        });
+    });
+
+    const dropdownToggles = shadow.querySelector('.dropdown-toggle');
+    console.log(dropdownToggles)
+    dropdownToggles.addEventListener('click', () => {
+        const target = shadow.querySelector(".dropdown-menu");
+        if (target.classList.contains('show')) {
+            target.classList.remove('show');
+            dropdownToggles.classList.remove('show');
+        } else {
+
+
+            target.classList.add('show');
+            dropdownToggles.classList.add('show');
+        }
+    });
 
     var script = document.createElement('script');
     script.src = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js";
@@ -587,8 +620,13 @@
     script.src = "https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js";
     shadow.appendChild(script);
 
+
+
+
+
     setupConsentBanner(shadow);
     setWeb(shadow);
+
 
     // shadow ---------------------------------------------------
 
