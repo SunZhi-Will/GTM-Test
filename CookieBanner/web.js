@@ -8,15 +8,24 @@
 
     // 找到当前运行的脚本
     const currentScript = scripts[scripts.length - 1];
-    console.log(currentScript); // 输出 id
+
     // 获取当前脚本的 src 属性
     const scriptSrc = currentScript.src;
 
     // 使用 URLSearchParams 提取 id 参数
     const urlParams = new URLSearchParams(scriptSrc.split('?')[1]);
     const id = urlParams.get('id');
+    console.log(this.scriptId)
+    console.log(this.scriptElement)
+    this.getURLParam = function (paramName) {
+        var d = document.getElementById(this.scriptId) || this.scriptElement
+            , urlParam = "";
+        return d && (paramName = new RegExp("[?&]" + encodeURIComponent(paramName) + "=([^&#]*)").exec(d.src),
+            paramName && (urlParam = decodeURIComponent(paramName[1].replace(/\+/g, " ")))),
+            urlParam
+    }
 
-    console.log(id); // 输出 id
+    console.log(this.getURLParam("id")); // 输出 id
 
     // 定義 API 的 URL 和參數
     const apiUrl = 'https://titlemaster-api.onrender.com/get_title/';
