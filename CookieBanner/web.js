@@ -15,6 +15,8 @@
     // 使用 URLSearchParams 提取 id 参数
     const urlParams = new URLSearchParams(scriptSrc.split('?')[1]);
     const id = urlParams.get('id');
+    var assumedCookiebotScript = document.currentScript;
+    console.log(assumedCookiebotScript)
     console.log(this.scriptId)
     console.log(this.scriptElement)
     this.getURLParam = function (paramName) {
