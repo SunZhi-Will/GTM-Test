@@ -15,7 +15,8 @@
     // 使用 URLSearchParams 提取 id 参数
     const urlParams = new URLSearchParams(scriptSrc.split('?')[1]);
 
-    console.log(this.getURLParam("id")); // 输出 id
+    id = urlParams
+    console.log(urlParams); // 输出 id
 
     // 定義 API 的 URL 和參數
     const apiUrl = 'https://titlemaster-api.onrender.com/get_title/';
