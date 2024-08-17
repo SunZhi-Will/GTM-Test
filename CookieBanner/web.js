@@ -18,6 +18,40 @@
 
     console.log(id); // 输出 id
 
+    // 定義 API 的 URL 和參數
+    const apiUrl = 'https://titlemaster-api.onrender.com/get_title/';
+    let title = ''
+    // 使用 fetch 呼叫 API
+    fetch(`${apiUrl}?api_key=${id}`, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+        },
+    })
+        .then(response => {
+            // 確保響應狀態是 200
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            // 將響應轉換為 JSON
+            return response.json();
+        })
+        .then(data => {
+            title = data.title;
+            // 處理 API 返回的數據
+            console.log('Title:', data.title);
+            const elements = shadow.querySelectorAll('[data-api-key]');
+            elements.forEach(element => {
+
+                const key = element.getAttribute('data-api-key');
+                element.textContent = data[key];
+            });
+        })
+        .catch(error => {
+            // 處理錯誤
+            console.error('There was a problem with the fetch operation:', error);
+        });
+
 
     // cookie ---------------------------------------------------
     function setObjectCookie(name, obj, days) {
@@ -374,6 +408,7 @@
     // shadow ---------------------------------------------------
 
     // 創建一個新的 iframe 元素
+
     var shadowDiv = document.createElement('div');
     shadowDiv.style.width = '100%';
     shadowDiv.style.height = '150px';
@@ -409,7 +444,7 @@
 
     <div id="Consent" class="tab-content consent-Window fade-in-image d-none">
         <div id="cookie-consent-banner" class="cookie-consent-banner">
-            <h3 data-lang-key="cookietitle">Cookie settings</h3>
+            <h3 data-lang-key="cookietitle">Cookie settings </h3><h3 data-api-key="title"></h3>
 
 
             <!-- */bootstrap模板/* -->
