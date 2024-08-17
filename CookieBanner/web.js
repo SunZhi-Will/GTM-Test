@@ -8,7 +8,7 @@
 
     // 找到当前运行的脚本
     const currentScript = scripts[scripts.length - 1];
-
+    console.log(currentScript); // 输出 id
     // 获取当前脚本的 src 属性
     const scriptSrc = currentScript.src;
 
