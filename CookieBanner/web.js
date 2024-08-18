@@ -309,13 +309,22 @@
 
         function setLanguage(language = "EN") {
             const elements = shadow.querySelectorAll('[data-lang-key]');
-            console.log(elements)
             elements.forEach(element => {
 
                 const key = element.getAttribute('data-lang-key');
                 element.textContent = translations[language][key];
             });
         }
+        // 获取所有具有 setLanguage 类的按钮
+        const buttons = shadow.querySelectorAll('.setLanguage');
+
+        // 使用 forEach 遍历每个按钮并添加点击事件
+        buttons.forEach(button => {
+            button.addEventListener('click', function () {
+                const key = button.getAttribute('key');
+                setLanguage(key); // 将 key 传递给 setLanguage 函数
+            });
+        });
 
         function reject_all() {
             const consent_analytics = shadow.querySelectorAll('.consent-analytics')
@@ -449,15 +458,28 @@
 
             <!-- */bootstrap模板/* -->
             <nav aria-label="choosepage">
-                <ul class="pagination pagination-lg">
-                <li class="page-item active" id="consent-tab" aria-current="page">
-                    <button class="page-link" data-lang-key="tabConsent">Consent</button>
+                <ul class="pagination pagination-lg" style="
+">
+                <li class="page-item active" id="consent-tab" aria-current="page" style="
+    flex: 1;
+">
+                    <button class="page-link" data-lang-key="tabConsent" style="
+    width: 100%;
+">Consent</button>
                 </li>
-                <li class="page-item" id="details-tab">
-                    <button class="page-link" data-lang-key="tabDetails">Details</button>
+                <li class="page-item" id="details-tab" style="
+    flex: 1;
+">
+                    <button class="page-link" data-lang-key="tabDetails" style="
+    width: 100%;
+">Details</button>
                 </li>
-                <li class="page-item" id="about-tab">
-                    <button class="page-link" data-lang-key="tabAbout">About</button>
+                <li class="page-item" id="about-tab" style="
+    flex: 1;
+">
+                    <button class="page-link" data-lang-key="tabAbout" style="
+    width: 100%;
+">About</button>
                 </li>
             </ul>
               </nav>
@@ -491,18 +513,22 @@
 
                 <!-- 按鈕 -->
                 <div class="tab-change-consent" id="consent-content">
-                    <div class="cookie-buttons">
+                    <div class="cookie-buttons dropup">
                         <button id="btn-accept-all" class="btn btn-outline-primary"   data-lang-key="selectAll">Select All</button>
                         <button id="btn-reject-all" class="btn btn-outline-danger"  data-lang-key="deselectAll">Deselect All</button>
                         <button id="btn-save-settings" class="btn btn-outline-success" data-lang-key="saveSettings">Save Settings</button>
-                        
+                        <div class="btn-group dropup">
                         <button class="btn btn-outline-secondary dropdown-toggle"  data-lang-key="language_btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                           Language
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                          <li><a class="dropdown-item" data-lang-key="language_zh" onclick="setLanguage('ZH')" >Zh-Tw</a></li>
-                          <li><a class="dropdown-item" data-lang-key="language_en" onclick="setLanguage('EN')" >English</a></li>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" style="
+    bottom: 100%;
+">
+                          <li><button class="dropdown-item setLanguage" key="ZH" data-lang-key="language_zh"  >Zh-Tw</button></li>
+                          <li><button class="dropdown-item setLanguage" key="EN" data-lang-key="language_en"  >English</button></li>
                         </ul>
+                    </div>
+
                     </div>
                 </div>
                 
