@@ -197,111 +197,107 @@
 
 
 
-        shadow.addEventListener('DOMContentLoaded', function () {
-
-            console.log(shadow.getElementsByTagName('head')[0])
-            var tabs = shadow.querySelectorAll('.page-item');
-            var contents = shadow.querySelectorAll('.tab-content');
-            var words = shadow.querySelectorAll('.tab-word');
+        var tabs = shadow.querySelectorAll('.page-item');
+        var contents = shadow.querySelectorAll('.tab-content');
+        var words = shadow.querySelectorAll('.tab-word');
 
 
-            tabs.forEach(function (tab, index) {
-                tab.addEventListener('click', function () {
-                    tabs.forEach(function (t) {
-                        t.classList.remove('active');
-                    });
-                    contents.forEach(function (content) {
-                        content.classList.remove('active');
-                    });
-                    words.forEach(function (word) {
-                        word.classList.remove('d-none');
-                        if (index == 0) {
-                            words[1].classList.add('d-none')
-                            words[2].classList.add('d-none')
-                        }
-                        if (index == 1) {
-                            words[0].classList.add('d-none')
-                            words[2].classList.add('d-none')
-                        }
-                        if (index == 2) {
-                            words[0].classList.add('d-none')
-                            words[1].classList.add('d-none')
-                        }
-                    })
-                    tab.classList.add('active');
-                    var contentId = tab.id.replace('-tab', '-content');
-                    var contentToShow = shadow.getElementById(contentId);
-                    if (contentToShow) {
-                        contentToShow.classList.add('active');
-                    }
+        tabs.forEach(function (tab, index) {
+            tab.addEventListener('click', function () {
+                tabs.forEach(function (t) {
+                    t.classList.remove('active');
                 });
-            });
-            const consent_analytics = shadow.querySelectorAll('.consent-analytics')
-            const consent_preferences = shadow.querySelectorAll('.consent-preferences')
-            const consent_marketings = shadow.querySelectorAll('.consent-marketing')
-            consent_analytics.forEach(function (consent_analytic, index) {
-                consent_analytic.addEventListener('click', () => {
-                    if (index === 0 && consent_analytics[0].checked == true) {
-                        consent_analytics[1].checked = true
+                contents.forEach(function (content) {
+                    content.classList.remove('active');
+                });
+                words.forEach(function (word) {
+                    word.classList.remove('d-none');
+                    if (index == 0) {
+                        words[1].classList.add('d-none')
+                        words[2].classList.add('d-none')
                     }
-                    else if (index === 1 && consent_analytics[1].checked == true) {
-                        consent_analytics[0].checked = true
+                    if (index == 1) {
+                        words[0].classList.add('d-none')
+                        words[2].classList.add('d-none')
                     }
-                    else if (index === 0 && consent_analytics[0].checked == false) {
-                        consent_analytics[1].checked = false
-                    }
-                    else if (index === 1 && consent_analytics[1].checked == false) {
-                        consent_analytics[0].checked = false
-                    }
-                })
-            })
-
-            consent_preferences.forEach(function (consent_preference, index) {
-                consent_preference.addEventListener('click', () => {
-                    if (index === 0 && consent_preferences[0].checked == true) {
-                        consent_preference[1].checked = true
-                    }
-                    else if (index === 1 && consent_preferences[1].checked == true) {
-                        consent_preferences[0].checked = true
-                    }
-                    else if (index === 0 && consent_preferences[0].checked == false) {
-                        consent_preferences[1].checked = false
-                    }
-                    else if (index === 1 && consent_preferences[1].checked == false) {
-                        consent_preferences[0].checked = false
+                    if (index == 2) {
+                        words[0].classList.add('d-none')
+                        words[1].classList.add('d-none')
                     }
                 })
-            })
-
-            consent_marketings.forEach(function (consent_marketing, index) {
-                consent_marketing.addEventListener('click', () => {
-                    if (index === 0 && consent_marketings[0].checked == true) {
-                        consent_marketings[1].checked = true
-                    }
-                    else if (index === 1 && consent_marketings[1].checked == true) {
-                        consent_marketings[0].checked = true
-                    }
-                    else if (index === 0 && consent_marketings[0].checked == false) {
-                        consent_marketings[1].checked = false
-                    }
-                    else if (index === 1 && consent_marketings[1].checked == false) {
-                        consent_marketings[0].checked = false
-                    }
-                })
-            })
-
-            /*修改視窗隱藏開啟*/
-            shadow.getElementById('floatingButton').addEventListener('click', function (event) {
-                event.preventDefault();
-                const chatWindow = shadow.querySelector('.consent-Window');
-                if (chatWindow.classList.contains('d-none')) {
-                    chatWindow.classList.remove('d-none');
-                } else {
-                    chatWindow.classList.add('d-none');
+                tab.classList.add('active');
+                var contentId = tab.id.replace('-tab', '-content');
+                var contentToShow = shadow.getElementById(contentId);
+                if (contentToShow) {
+                    contentToShow.classList.add('active');
                 }
             });
-
         });
+        const consent_analytics = shadow.querySelectorAll('.consent-analytics')
+        const consent_preferences = shadow.querySelectorAll('.consent-preferences')
+        const consent_marketings = shadow.querySelectorAll('.consent-marketing')
+        consent_analytics.forEach(function (consent_analytic, index) {
+            consent_analytic.addEventListener('click', () => {
+                console.log('test')
+                if (index === 0 && consent_analytics[0].checked == true) {
+                    consent_analytics[1].checked = true
+                }
+                else if (index === 1 && consent_analytics[1].checked == true) {
+                    consent_analytics[0].checked = true
+                }
+                else if (index === 0 && consent_analytics[0].checked == false) {
+                    consent_analytics[1].checked = false
+                }
+                else if (index === 1 && consent_analytics[1].checked == false) {
+                    consent_analytics[0].checked = false
+                }
+            })
+        })
+
+        consent_preferences.forEach(function (consent_preference, index) {
+            consent_preference.addEventListener('click', () => {
+                if (index === 0 && consent_preferences[0].checked == true) {
+                    consent_preference[1].checked = true
+                }
+                else if (index === 1 && consent_preferences[1].checked == true) {
+                    consent_preferences[0].checked = true
+                }
+                else if (index === 0 && consent_preferences[0].checked == false) {
+                    consent_preferences[1].checked = false
+                }
+                else if (index === 1 && consent_preferences[1].checked == false) {
+                    consent_preferences[0].checked = false
+                }
+            })
+        })
+
+        consent_marketings.forEach(function (consent_marketing, index) {
+            consent_marketing.addEventListener('click', () => {
+                if (index === 0 && consent_marketings[0].checked == true) {
+                    consent_marketings[1].checked = true
+                }
+                else if (index === 1 && consent_marketings[1].checked == true) {
+                    consent_marketings[0].checked = true
+                }
+                else if (index === 0 && consent_marketings[0].checked == false) {
+                    consent_marketings[1].checked = false
+                }
+                else if (index === 1 && consent_marketings[1].checked == false) {
+                    consent_marketings[0].checked = false
+                }
+            })
+        })
+
+        // /*修改視窗隱藏開啟*/
+        // shadow.getElementById('floatingButton').addEventListener('click', function (event) {
+        //     event.preventDefault();
+        //     const chatWindow = shadow.querySelector('.consent-Window');
+        //     if (chatWindow.classList.contains('d-none')) {
+        //         chatWindow.classList.remove('d-none');
+        //     } else {
+        //         chatWindow.classList.add('d-none');
+        //     }
+        // });
 
 
 
